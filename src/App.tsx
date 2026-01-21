@@ -1,7 +1,7 @@
-import "./App.css";
+import { MapView } from "./features/map/MapView";
 
 function App() {
-  return <></>;
+  return <MapView />;
 }
 
 export default App;

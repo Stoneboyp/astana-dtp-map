@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.19",
+    "@vis.gl/react-maplibre": "^8.1.0",
     "axios": "^1.13.2",
     "maplibre-gl": "^5.16.0",
     "mobx-react": "^9.2.1",
