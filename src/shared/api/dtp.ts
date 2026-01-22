@@ -1,15 +1,13 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import type { GeoJsonFeatureCollection } from "../types/geo";
-
-const DTP_URL =
-  "https://gis.kgp.kz/arcgis/rest/services/KPSSU/DTP/FeatureServer/0/query";
+import { API_URLS } from "@shared/config";
 
 export const useDtpPointsQuery = () => {
   return useQuery({
     queryKey: ["dtp-points"],
     queryFn: async (): Promise<GeoJsonFeatureCollection> => {
-      const { data } = await axios.get(DTP_URL, {
+      const { data } = await axios.get(API_URLS.DTP, {
         params: {
           where: "area_code='1971'",
           outFields: "*",
