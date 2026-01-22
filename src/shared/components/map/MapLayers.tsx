@@ -52,7 +52,15 @@ export const MapLayers = () => {
             filter={["has", "point_count"]}
             paint={{
               "circle-color": "#f87171",
-              "circle-radius": ["step", ["get", "point_count"], 15, 10, 20, 50, 30],
+              "circle-radius": [
+                "step",
+                ["get", "point_count"],
+                15,
+                10,
+                20,
+                50,
+                30,
+              ],
             }}
           />
           {/* Количество в кластере */}
