@@ -15,7 +15,6 @@ export const MapLayers = () => {
 
   return (
     <>
-      {/* Граница города */}
       <Source id="city-area" type="geojson" data={cityGeoJson}>
         <Layer
           id="city-area-fill"
@@ -35,17 +34,15 @@ export const MapLayers = () => {
         />
       </Source>
 
-      {/* Точки ДТП с кластеризацией */}
       {dtpData && (
         <Source
           id="dtp-points"
           type="geojson"
-          data={dtpData as GeoJsonFeatureCollection} // приводим к типу
+          data={dtpData as GeoJsonFeatureCollection}
           cluster={true}
           clusterRadius={50}
           clusterMaxZoom={14}
         >
-          {/* Кластеры */}
           <Layer
             id="clusters"
             type="circle"
@@ -63,7 +60,6 @@ export const MapLayers = () => {
               ],
             }}
           />
-          {/* Количество в кластере */}
           <Layer
             id="cluster-count"
             type="symbol"
@@ -74,7 +70,6 @@ export const MapLayers = () => {
               "text-size": 12,
             }}
           />
-          {/* Отдельные точки */}
           <Layer
             id="unclustered-point"
             type="circle"
