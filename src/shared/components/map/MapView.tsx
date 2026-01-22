@@ -2,6 +2,7 @@ import { Map } from "@vis.gl/react-maplibre";
 import type { MapRef } from "@vis.gl/react-maplibre";
 import { useRef } from "react";
 import { MAP_SETTINGS } from "@shared/config";
+import { MapLayers } from "./MapLayers";
 
 export const MapView = () => {
   const mapRef = useRef<MapRef | null>(null);
@@ -12,6 +13,8 @@ export const MapView = () => {
       initialViewState={MAP_SETTINGS.ASTANA_VIEW}
       mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
       style={{ width: "100vw", height: "100vh" }}
-    />
+    >
+      <MapLayers/>
+    </Map>
   );
 };
