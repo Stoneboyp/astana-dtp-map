@@ -13,6 +13,7 @@ export const useDtpPointsQuery = () => {
           outFields: "*",
           returnGeometry: true,
           f: "geojson",
+          outSR: 4326,
         },
       });
       return data;
