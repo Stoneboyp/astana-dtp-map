@@ -2,6 +2,8 @@
 
 A simple dashboard to visualize road accidents in Astana.
 
+**[Live Demo](https://astana-dtp-map.vercel.app/)**
+
 ## Features
 
 - **Map**: Uses MapLibre GL for rendering.
