@@ -1,3 +1,7 @@
+import {
+  MAP_LAYERS_CONFIG,
+  type LayerId,
+} from "@shared/components/map/config/layers";
 import { makeAutoObservable } from "mobx";
 
 export type SelectedDtpPoint = {
@@ -9,10 +13,13 @@ export type SelectedDtpPoint = {
 class MapUiStore {
   selectedPoint: SelectedDtpPoint | null = null;
 
-  layersVisible = {
-    dtpPoints: true,
-    cityArea: true,
-  };
+  layersVisible = Object.keys(MAP_LAYERS_CONFIG).reduce(
+    (acc, key) => {
+      acc[key as LayerId] = true;
+      return acc;
+    },
+    {} as Record<LayerId, boolean>,
+  );
 
   constructor() {
     makeAutoObservable(this);
@@ -26,8 +33,8 @@ class MapUiStore {
     this.selectedPoint = null;
   }
 
-  toggleLayer(layer: keyof typeof this.layersVisible) {
-    this.layersVisible[layer] = !this.layersVisible[layer];
+  toggleLayer(layerId: LayerId) {
+    this.layersVisible[layerId] = !this.layersVisible[layerId];
   }
 }
 
