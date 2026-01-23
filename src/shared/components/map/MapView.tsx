@@ -3,10 +3,10 @@ import type { MapRef } from "@vis.gl/react-maplibre";
 import { useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { MAP_SETTINGS } from "@shared/config";
-import { MapLayers } from "@shared/components/map/MapLayers";
+import { MapLayers } from "@shared/components/map";
 import { useMapClick } from "@shared/hooks/useMapClick";
-import { LayerSwitcher } from "@shared/components/LayerSwitcher";
-import { MapPopups } from "@shared/components/map/MapPopups";
+import { LayerSwitcher } from "@shared/components/map";
+import { MapPopups } from "@shared/components/map";
 export const MapView = observer(() => {
   const mapRef = useRef<MapRef | null>(null);
   const { handleMapClick } = useMapClick(mapRef);

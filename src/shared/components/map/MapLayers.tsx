@@ -9,6 +9,7 @@ export const MapLayers = observer(() => {
   const { data: cityData } = useCityAreaQuery();
   const { data: dtpData } = useDtpPointsQuery();
   const { selectedPoint, layersVisible } = mapUiStore;
+
   return (
     <>
       {cityData && layersVisible.cityArea && (
