@@ -9,7 +9,6 @@ export const MapLayers = observer(() => {
   const { data: cityData } = useCityAreaQuery();
   const { data: dtpData } = useDtpPointsQuery();
   const { selectedPoint, layersVisible } = mapUiStore;
-  console.log(cityData?.features[0].geometry.type);
   return (
     <>
       {cityData && layersVisible.cityArea && (
@@ -67,6 +66,8 @@ export const MapLayers = observer(() => {
                 50,
                 35,
               ],
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "#fff",
             }}
           />
 
@@ -91,7 +92,7 @@ export const MapLayers = observer(() => {
             }
             paint={{
               "circle-color": "#fbbf24",
-              "circle-radius": 6,
+              "circle-radius": 7,
               "circle-stroke-width": 1,
               "circle-stroke-color": "#fff",
             }}
