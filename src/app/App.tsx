@@ -1,7 +1,7 @@
-import { MapView } from "@shared/components/map/MapView";
+import { MapPage } from "@pages/map/MapPage";
 
 function App() {
-  return <MapView />;
+  return <MapPage />;
 }
 
 export default App;
