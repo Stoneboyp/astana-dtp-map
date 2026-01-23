@@ -12,6 +12,7 @@
       "@app/*": ["app/*"],
       "@pages/*": ["pages/*"],
       "@shared/*": ["shared/*"],
+      "@utils/*": ["utils/*"]
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

@@ -1,23 +1,19 @@
 import { Popup } from "@vis.gl/react-maplibre";
 import { observer } from "mobx-react-lite";
 import { mapUiStore } from "@shared/store/mapUiStore";
+import { normalizeDtpData } from "@utils/normalize";
 
 export const MapPopups = observer(() => {
   const { selectedPoint } = mapUiStore;
 
   if (!selectedPoint) return null;
 
-  const p = selectedPoint.properties;
-
-  // Форматируем дату
-  const formattedDate = p?.rta_date
-    ? new Date(p.rta_date).toLocaleDateString("ru-RU")
-    : "—";
+  const dtp = normalizeDtpData(selectedPoint);
 
   return (
     <Popup
-      longitude={selectedPoint.coordinates[0]}
-      latitude={selectedPoint.coordinates[1]}
+      longitude={dtp.coordinates[0]}
+      latitude={dtp.coordinates[1]}
       anchor="bottom"
       offset={15}
       onClose={() => mapUiStore.clearSelectedPoint()}
@@ -32,7 +28,6 @@ export const MapPopups = observer(() => {
           fontFamily: "sans-serif",
         }}
       >
-        {/* Заголовок: Номер и Дата */}
         <div
           style={{
             display: "flex",
@@ -43,13 +38,12 @@ export const MapPopups = observer(() => {
             marginBottom: "8px",
           }}
         >
-          <span>№ {selectedPoint.id}</span>
-          <span style={{ color: "#2563eb" }}>{formattedDate}</span>
+          <span>№ {dtp.id}</span>
+          <span style={{ color: "#2563eb" }}>{dtp.date}</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          {/* 1. Вид нарушения/Причина */}
-          {p?.fd1r09p1 && (
+          {dtp.reason && (
             <div>
               <div
                 style={{
@@ -68,12 +62,11 @@ export const MapPopups = observer(() => {
                   lineHeight: "1.3",
                 }}
               >
-                {p.fd1r09p1}
+                {dtp.reason}
               </div>
             </div>
           )}
 
-          {/* 2. Время и условия дороги */}
           <div
             style={{
               display: "flex",
@@ -92,10 +85,10 @@ export const MapPopups = observer(() => {
               >
                 Время
               </div>
-              <div>{p?.fd1r05p1 || "—"}</div>
+              <div>{dtp.time}</div>
             </div>
 
-            {p?.fd1r071p1 && (
+            {dtp.surface && (
               <div style={{ textAlign: "right" }}>
                 <div
                   style={{
@@ -107,12 +100,11 @@ export const MapPopups = observer(() => {
                 >
                   Покрытие
                 </div>
-                <div>{p.fd1r071p1}</div>
+                <div>{dtp.surface}</div>
               </div>
             )}
           </div>
 
-          {/* 3. Местоположение (кратко) */}
           <div
             style={{
               fontSize: "10px",
@@ -122,8 +114,7 @@ export const MapPopups = observer(() => {
               textAlign: "center",
             }}
           >
-            {selectedPoint.coordinates[1].toFixed(5)},{" "}
-            {selectedPoint.coordinates[0].toFixed(5)}
+            {dtp.coordinates[1].toFixed(5)}, {dtp.coordinates[0].toFixed(5)}
           </div>
         </div>
       </div>
