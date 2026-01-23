@@ -1,14 +1,15 @@
-import { Source, Layer, Popup } from "@vis.gl/react-maplibre";
+import { Source, Layer } from "@vis.gl/react-maplibre";
 import { observer } from "mobx-react-lite";
 import { useCityAreaQuery } from "@shared/api/cityArea";
 import { useDtpPointsQuery } from "@shared/api/dtp";
 import { mapUiStore } from "@shared/store/mapUiStore";
 import type { GeoJsonFeatureCollection } from "@shared/types/geo";
+
 export const MapLayers = observer(() => {
   const { data: cityData } = useCityAreaQuery();
   const { data: dtpData } = useDtpPointsQuery();
   const { selectedPoint, layersVisible } = mapUiStore;
-
+  console.log(cityData?.features[0].geometry.type);
   return (
     <>
       {cityData && layersVisible.cityArea && (
@@ -110,20 +111,6 @@ export const MapLayers = observer(() => {
             />
           )}
         </Source>
-      )}
-
-      {selectedPoint && (
-        <Popup
-          longitude={selectedPoint.coordinates[0]}
-          latitude={selectedPoint.coordinates[1]}
-          anchor="bottom"
-          offset={15}
-          onClose={() => mapUiStore.clearSelectedPoint()}
-        >
-          <div style={{ color: "#000", padding: "5px" }}>
-            <strong>ДТП #{selectedPoint.id}</strong>
-          </div>
-        </Popup>
       )}
     </>
   );
