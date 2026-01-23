@@ -4,7 +4,6 @@ import { useCityAreaQuery } from "@shared/api/cityArea";
 import { useDtpPointsQuery } from "@shared/api/dtp";
 import { mapUiStore } from "@shared/store/mapUiStore";
 import type { GeoJsonFeatureCollection } from "@shared/types/geo";
-
 export const MapLayers = observer(() => {
   const { data: cityData } = useCityAreaQuery();
   const { data: dtpData } = useDtpPointsQuery();
@@ -33,10 +32,11 @@ export const MapLayers = observer(() => {
 
       {dtpData && layersVisible.dtpPoints && (
         <Source
+          key={layersVisible.clusterMode ? "clustered" : "raw"}
           id="dtp-points"
           type="geojson"
           data={dtpData as GeoJsonFeatureCollection}
-          cluster={true}
+          cluster={layersVisible.clusterMode}
           clusterRadius={50}
           clusterMaxZoom={14}
         >
@@ -44,24 +44,37 @@ export const MapLayers = observer(() => {
             id="clusters"
             type="circle"
             filter={["has", "point_count"]}
+            layout={{
+              visibility: layersVisible.clusterMode ? "visible" : "none",
+            }}
             paint={{
-              "circle-color": "#f87171",
+              "circle-color": [
+                "step",
+                ["get", "point_count"],
+                "#51bbd6",
+                10,
+                "#f1f075",
+                50,
+                "#f28cb1",
+              ],
               "circle-radius": [
                 "step",
                 ["get", "point_count"],
                 15,
                 10,
-                20,
+                25,
                 50,
-                30,
+                35,
               ],
             }}
           />
+
           <Layer
             id="cluster-count"
             type="symbol"
             filter={["has", "point_count"]}
             layout={{
+              visibility: layersVisible.clusterMode ? "visible" : "none",
               "text-field": "{point_count_abbreviated}",
               "text-size": 12,
             }}
@@ -70,10 +83,16 @@ export const MapLayers = observer(() => {
           <Layer
             id="unclustered-point"
             type="circle"
-            filter={["!", ["has", "point_count"]]}
+            filter={
+              (layersVisible.clusterMode
+                ? ["!", ["has", "point_count"]]
+                : ["all"]) as any
+            }
             paint={{
               "circle-color": "#fbbf24",
               "circle-radius": 6,
+              "circle-stroke-width": 1,
+              "circle-stroke-color": "#fff",
             }}
           />
 
@@ -81,7 +100,7 @@ export const MapLayers = observer(() => {
             <Layer
               id="selected-point-highlight"
               type="circle"
-              filter={["==", ["get", "objectid"], selectedPoint.id]}
+              filter={["==", ["get", "objectid"], selectedPoint.id] as any}
               paint={{
                 "circle-color": "transparent",
                 "circle-radius": 8,
@@ -100,14 +119,9 @@ export const MapLayers = observer(() => {
           anchor="bottom"
           offset={15}
           onClose={() => mapUiStore.clearSelectedPoint()}
-          closeOnClick={false}
         >
           <div style={{ color: "#000", padding: "5px" }}>
             <strong>ДТП #{selectedPoint.id}</strong>
-            <p style={{ fontSize: "11px", margin: "5px 0 0" }}>
-              Координаты: {selectedPoint.coordinates[1].toFixed(4)},{" "}
-              {selectedPoint.coordinates[0].toFixed(4)}
-            </p>
           </div>
         </Popup>
       )}

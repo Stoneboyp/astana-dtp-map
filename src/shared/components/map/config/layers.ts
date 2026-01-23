@@ -7,6 +7,10 @@ export const MAP_LAYERS_CONFIG = {
     id: "dtpPoints",
     label: "Точки ДТП",
   },
+  clusterMode: {
+    id: "clusterMode",
+    label: "Кластеризация",
+  },
 } as const;
 
 export type LayerId = keyof typeof MAP_LAYERS_CONFIG;
