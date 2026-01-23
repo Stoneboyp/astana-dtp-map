@@ -18,5 +18,6 @@ export const useCityAreaQuery = () => {
       });
       return data;
     },
+    staleTime: Infinity,
   });
 };

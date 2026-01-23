@@ -17,7 +17,7 @@ export const MapView = observer(() => {
       <Map
         ref={mapRef}
         initialViewState={MAP_SETTINGS.ASTANA_VIEW}
-        mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        mapStyle={MAP_SETTINGS.STYLE}
         style={{ width: "100%", height: "100%" }}
         interactiveLayerIds={["clusters", "unclustered-point"]}
         onClick={handleMapClick}
